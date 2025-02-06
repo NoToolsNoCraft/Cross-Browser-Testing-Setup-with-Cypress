@@ -58,10 +58,13 @@ jobs:
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
+          mkdir -p cypress/Firefox_screenshots
           git add cypress/Firefox_screenshots
           git commit -m "Add Cypress Firefox screenshots"
-          git push
+          git pull origin main --rebase  # Fetch and rebase to avoid merge conflicts
+          git push origin firefox-screenshots:main  # Push to the main branch with a specific branch name
         continue-on-error: true
+
 
   edge-tests:
     runs-on: ubuntu-latest
