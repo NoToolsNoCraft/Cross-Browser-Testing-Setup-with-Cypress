@@ -23,10 +23,9 @@ jobs:
         node-version: '16'
 
     - name: Install Dependencies
-      run: npm install
-
-    - name: Verify Cypress Installation
-      run: npx cypress verify
+      run: |
+        npm install cypress --save-dev
+        npx cypress install
 
     - name: Clean Screenshots Folder
       run: |
