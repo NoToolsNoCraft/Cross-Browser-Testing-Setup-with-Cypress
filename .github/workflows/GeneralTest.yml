@@ -27,15 +27,16 @@ jobs:
       - name: Run Cypress tests in Chrome
         env:
           CYPRESS_BROWSER: chrome
-          CYPRESS_screenshotsFolder: cypress/screenshots/chrome
+          CYPRESS_screenshotsFolder: cypress/Chrome_screenshots
         run: npx cypress run --browser chrome
 
       - name: Commit and push Chrome screenshots
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
-          git add cypress/screenshots/chrome
-          git commit -m "Add Cypress Chrome screenshots"
+          git pull --rebase origin main
+          git add cypress/Chrome_screenshots
+          git commit -m "Add Cypress Chrome screenshots" || echo "No changes to commit"
           git push
         continue-on-error: true
 
@@ -56,15 +57,16 @@ jobs:
       - name: Run Cypress tests in Firefox
         env:
           CYPRESS_BROWSER: firefox
-          CYPRESS_screenshotsFolder: cypress/screenshots/firefox
+          CYPRESS_screenshotsFolder: cypress/Firefox_screenshots
         run: npx cypress run --browser firefox
 
       - name: Commit and push Firefox screenshots
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
-          git add cypress/screenshots/firefox
-          git commit -m "Add Cypress Firefox screenshots"
+          git pull --rebase origin main
+          git add cypress/Firefox_screenshots
+          git commit -m "Add Cypress Firefox screenshots" || echo "No changes to commit"
           git push
         continue-on-error: true
 
@@ -85,14 +87,15 @@ jobs:
       - name: Run Cypress tests in Edge
         env:
           CYPRESS_BROWSER: edge
-          CYPRESS_screenshotsFolder: cypress/screenshots/edge
+          CYPRESS_screenshotsFolder: cypress/Edge_screenshots
         run: npx cypress run --browser edge
 
       - name: Commit and push Edge screenshots
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
-          git add cypress/screenshots/edge
-          git commit -m "Add Cypress Edge screenshots"
+          git pull --rebase origin main
+          git add cypress/Edge_screenshots
+          git commit -m "Add Cypress Edge screenshots" || echo "No changes to commit"
           git push
         continue-on-error: true
