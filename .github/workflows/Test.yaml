@@ -56,8 +56,14 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
+        # Stash any uncommitted changes to avoid errors
+        git stash
+        
         # Pull latest changes to avoid conflicts
         git pull origin main --rebase
+        
+        # Apply the stashed changes
+        git stash pop
         
         git add cypress/screenshots
         git commit -m "Add Cypress screenshots for ${{ matrix.browser }}"
