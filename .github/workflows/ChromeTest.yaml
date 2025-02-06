@@ -1,4 +1,4 @@
-name: Run Cypress Tests on Multiple Browsers
+name: Run Cypress Tests on Chrome Browser
 
 permissions:
   contents: write
