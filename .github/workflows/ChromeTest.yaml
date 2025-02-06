@@ -1,57 +1,38 @@
-name: Run Cypress Tests on Chrome Browser
-
-permissions:
-  contents: write
+name: Cypress Responsiveness Test
 
 on:
   push:
     branches:
       - main
-  pull_request:
+  workflow_dispatch:
 
 jobs:
-  run_tests:
-    strategy:
-      matrix:
-        browser: [chrome]
+  run-cypress-tests:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.BOTTOKEN }}
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-    - name: Install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Install dependencies
-      run: |
-        npm ci  # Install dependencies from package-lock.json
-  
-    
-    - name: Install Cypress
-      run: npm install cypress --save-dev  # Install Cypress as a dev dependency
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Run Cypress tests
-      run: npx cypress run --spec 'cypress/e2e/'  # Runs all tests in the e2e folder
+      - name: Run Cypress tests in Chrome
+        env:
+          CYPRESS_BROWSER: chrome
+        run: npx cypress run --browser chrome
 
-    
-
-    - name: Run Cypress Tests on ${{ matrix.browser }}
-      env:
-        BROWSER: ${{ matrix.browser }}
-      run: |
-        npx cypress run --browser $BROWSER --headless
-
-    - name: Commit and Push Screenshots
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git remote set-url origin https://github.com/${{ github.repository }}.git
-        git add cypress/screenshots
-        git commit -m "Add Cypress screenshots for ${{ matrix.browser }}"
-        git push
-      if: success()  # Commit only if tests succeeded
+      - name: Commit and push screenshots
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          mkdir -p cypress/screenshots/chrome
+          git add cypress/screenshots
+          git commit -m "Add Cypress screenshots for responsiveness tests"
+          git push
+        continue-on-error: true
