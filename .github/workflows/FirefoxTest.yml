@@ -19,10 +19,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress tests in Chrome
+      - name: Run Cypress tests in Firefox
         env:
-          CYPRESS_BROWSER: chrome
-        run: npx cypress run --browser chrome
+          CYPRESS_BROWSER: firefox
+        run: npx cypress run --browser firefox
 
       - name: Commit and push screenshots
         run: |
