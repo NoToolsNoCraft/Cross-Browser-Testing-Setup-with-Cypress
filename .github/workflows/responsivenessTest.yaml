@@ -1,5 +1,8 @@
 name: Run Cypress Tests on Multiple Browsers
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -16,6 +19,8 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.BOTTOKEN }}
 
     - name: Install Node.js
       uses: actions/setup-node@v3
@@ -50,7 +55,8 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git remote set-url origin https://github.com/${{ github.repository }}.git
         git add cypress/screenshots
         git commit -m "Add Cypress screenshots for ${{ matrix.browser }}"
-        git push "https://${{ secrets.BOTTOKEN }}@github.com/${{ github.repository }}.git"
+        git push
       if: success()  # Commit only if tests succeeded
