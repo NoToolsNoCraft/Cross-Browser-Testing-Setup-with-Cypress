@@ -18,6 +18,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+        - name: Create directories for screenshots
+          run: |
+            mkdir -p cypress/screenshots/chrome
+            mkdir -p cypress/screenshots/firefox
+            mkdir -p cypress/screenshots/edge
+
       - name: Run Cypress tests in Chrome
         env:
           CYPRESS_BROWSER: chrome
