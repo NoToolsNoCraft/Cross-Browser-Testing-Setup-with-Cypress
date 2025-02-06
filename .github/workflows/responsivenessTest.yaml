@@ -22,16 +22,23 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Install Dependencies
+    - name: Install dependencies
       run: |
-        npm install cypress --save-dev
-        npx cypress install
-
+        npm ci  # Install dependencies from package-lock.json
+    
     - name: Clean Screenshots Folder
       run: |
         if [ -d "cypress/screenshots" ]; then
           rm -rf cypress/screenshots
         fi
+    
+    - name: Install Cypress
+      run: npm install cypress --save-dev  # Install Cypress as a dev dependency
+
+    - name: Run Cypress tests
+      run: npx cypress run --spec 'cypress/e2e/'  # Runs all tests in the e2e folder
+
+    
 
     - name: Run Cypress Tests on ${{ matrix.browser }}
       env:
