@@ -22,6 +22,12 @@ jobs:
       with:
         node-version: '16'
 
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Verify Cypress Installation
+      run: npx cypress verify
+
     - name: Clean Screenshots Folder
       run: |
         if [ -d "cypress/screenshots" ]; then
@@ -32,7 +38,7 @@ jobs:
       env:
         BROWSER: ${{ matrix.browser }}
       run: |
-        npx cypress run --browser $BROWSER
+        npx cypress run --browser $BROWSER --headless
 
     - name: Upload Screenshots for ${{ matrix.browser }}
       uses: actions/upload-artifact@v4
