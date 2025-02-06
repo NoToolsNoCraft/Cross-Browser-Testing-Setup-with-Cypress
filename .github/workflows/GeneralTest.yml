@@ -61,9 +61,12 @@ jobs:
           mkdir -p cypress/Firefox_screenshots
           git add cypress/Firefox_screenshots
           git commit -m "Add Cypress Firefox screenshots"
+          git add .  # Make sure all changes are added
+          git commit -m "Commit any unstaged changes before pulling"
           git pull origin main --rebase  # Fetch and rebase to avoid merge conflicts
           git push origin firefox-screenshots:main  # Push to the main branch with a specific branch name
         continue-on-error: true
+
 
 
   edge-tests:
