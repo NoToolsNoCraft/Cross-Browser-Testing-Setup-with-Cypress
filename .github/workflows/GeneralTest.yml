@@ -24,6 +24,15 @@ jobs:
           CYPRESS_screenshotsFolder: cypress/Chrome_screenshots
         run: npx cypress run --browser chrome
 
+      - name: Commit and push Chrome screenshots
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add cypress/Chrome_screenshots
+          git commit -m "Add Cypress Chrome screenshots"
+          git push
+        continue-on-error: true
+
   firefox-tests:
     runs-on: ubuntu-latest
     steps:
@@ -44,6 +53,15 @@ jobs:
           CYPRESS_screenshotsFolder: cypress/Firefox_screenshots
         run: npx cypress run --browser firefox
 
+      - name: Commit and push Firefox screenshots
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add cypress/Firefox_screenshots
+          git commit -m "Add Cypress Firefox screenshots"
+          git push
+        continue-on-error: true
+
   edge-tests:
     runs-on: ubuntu-latest
     steps:
@@ -63,3 +81,12 @@ jobs:
           CYPRESS_BROWSER: edge
           CYPRESS_screenshotsFolder: cypress/Edge_screenshots
         run: npx cypress run --browser edge
+
+      - name: Commit and push Edge screenshots
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add cypress/Edge_screenshots
+          git commit -m "Add Cypress Edge screenshots"
+          git push
+        continue-on-error: true
