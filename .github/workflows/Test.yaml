@@ -69,4 +69,3 @@ jobs:
         git commit -m "Add Cypress screenshots for ${{ matrix.browser }}"
         git push origin main
       if: success()  # Commit only if tests succeeded
-
